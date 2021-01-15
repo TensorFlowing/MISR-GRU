@@ -164,9 +164,10 @@ def train_and_get_best_model(misr_model, regis_model, optimizer, dataloaders, ba
             hr_maps = hr_maps.float().to(device)
             hrs = hrs.float().to(device)
 
+            ############ Abel: key, forward prop!
             srs = misr_model(lrs, alphas)
 
-            # Register batch wrt HR
+            # Register batch wrt HR (Abel: align wrt HR)
             shifts = register_batch(regis_model,
                                     srs[:, :, offset:(offset + 128), offset:(offset + 128)],
                                     reference=hrs[:, offset:(offset + 128), offset:(offset + 128)].view(-1, 1, 128, 128))
@@ -174,7 +175,8 @@ def train_and_get_best_model(misr_model, regis_model, optimizer, dataloaders, ba
 
             # Training loss
             cropped_mask = torch_mask[0] * hr_maps  # Compute current mask (Batch size, W, H)
-            loss = -get_loss(srs_shifted, hrs, cropped_mask, metric='cPSNR')
+
+            loss = -get_loss(srs_shifted, hrs, cropped_mask, metric='cPSNR') 
             loss = torch.mean(loss)
             loss += config["training"]["lambda"] * torch.mean(shifts)**2
 
@@ -184,6 +186,7 @@ def train_and_get_best_model(misr_model, regis_model, optimizer, dataloaders, ba
             epoch_loss = loss.detach().cpu().numpy() * len(hrs) / len(dataloaders['train'].dataset)
             train_loss += epoch_loss
 
+        # Abel: after finishing iterating over the data
         # Eval
         misr_model.eval()
         val_score = 0.0  # monitor val score
@@ -242,7 +245,7 @@ def main(config):
 
     # Initialize the network based on the network configuration
     misr_model = MISRGRU(config["network"])
-    regis_model = ShiftNet()
+    regis_model = ShiftNet() # Abel: a CNN
 
     optimizer = optim.Adam(list(misr_model.parameters()) + list(regis_model.parameters()), lr=config["training"]["lr"])  # optim
     # ESA dataset

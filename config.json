@@ -1,9 +1,9 @@
 {
   "paths": {
-    "data_dir": "/Volumes/MyDrive/Research/Super-Resolution/probav_data/",
-    "checkpoint_dir": "../checkpoints",
-    "tb_log_file_dir": "../tb_logs/",
-    "submission_dir": "../submission"
+    "data_dir": "/home/abel/Desktop/superRes/MISR-GRU/data/",
+    "checkpoint_dir": "./checkpoints",
+    "tb_log_file_dir": "./tb_logs/",
+    "submission_dir": "./submission"
   },
 
   "network": {
@@ -35,8 +35,8 @@
   },
 
   "training": {
-     "num_epochs": 400,
-     "batch_size": 16,
+     "num_epochs": 2,
+     "batch_size": 1,
 
      "min_L": 24,
      "n_views": 24,

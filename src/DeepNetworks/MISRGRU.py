@@ -240,7 +240,7 @@ class MISRGRU(nn.Module):
 
         alphas = alphas.view(-1, num_low_res, 1, 1, 1)
 
-        # encode LR views
+        # encode LR views (Abel:extract features)
         lrs = lrs.view(batch_size * num_low_res, 1, height, width)
         lrs = self.unit1(lrs)
         lrs = lrs.view(batch_size, num_low_res, -1, height, width)
