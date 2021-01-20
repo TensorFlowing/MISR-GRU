@@ -1,6 +1,6 @@
 {
   "paths": {
-    "data_dir": "/home/abel/Desktop/superRes/MISR-GRU/data/",
+    "data_dir": "/mnt/Data/yangbo/data/probav_data/",
     "checkpoint_dir": "./checkpoints",
     "tb_log_file_dir": "./tb_logs/",
     "submission_dir": "./submission"
@@ -35,8 +35,8 @@
   },
 
   "training": {
-     "num_epochs": 2,
-     "batch_size": 1,
+     "num_epochs": 400,
+     "batch_size": 16,
 
      "min_L": 24,
      "n_views": 24,

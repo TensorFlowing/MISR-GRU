@@ -16,6 +16,9 @@ from Evaluator import shift_cPSNR
 from utils import get_imageset_directories, read_baseline_CPSNR, collateFunction
 from tensorboardX import SummaryWriter
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '4' # One GPU is good for the origin training, it seems that original repo didn't use parallel
+
+
 
 def register_batch(shiftNet, lrs, reference):
     """
